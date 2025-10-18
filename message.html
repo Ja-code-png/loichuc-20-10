@@ -1,44 +1,202 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lời chúc 20/10 💌</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* 🌈 Nền gradient chuyển động rực rỡ */
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Khung chính */
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 25px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      width: 90%;
+      max-width: 450px;
+      transition: all 0.8s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    input, button {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid #e91e63;
+      font-size: 16px;
+      margin-top: 10px;
+      outline: none;
+    }
+
+    button {
+      background: #e91e63;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    /* ✨ Lời chúc & ảnh */
+    .wish-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    .wish-image {
+      width: 250px;
+      max-width: 80%;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      animation: zoomIn 1.5s ease forwards;
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    .wish-text {
+      color: #e91e63;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.6;
+      animation: fadeInUp 1.3s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 💖 Tim bay lớn hơn, bay chậm hơn */
+    .heart {
+      position: fixed;
+      bottom: 0;
+      font-size: 28px;
+      animation: fly 6s linear infinite;
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.8);
+        opacity: 0;
+      }
+    }
+  </style>
+
   <script>
-    // 🔐 Mỗi mật khẩu = 1 lời chúc riêng
-    const passwords = {
-      "hoa2024": "💐 Chúc Hoa ngày 20/10 thật xinh đẹp, tràn đầy năng lượng và hạnh phúc bên những người thân yêu!",
-      "mai2024": "🌸 Mai ơi, chúc bạn luôn vui vẻ, tự tin và thành công trong mọi việc!",
-      "anh2024": "💝 Chúc Anh một ngày 20/10 thật đáng nhớ, luôn được yêu thương và nở nụ cười thật tươi!"
+    // 🔐 Mỗi mật khẩu = 1 lời chúc + 1 ảnh riêng
+    const wishes = {
+      "hoa2024": {
+        text: "💐 Chúc Hoa ngày 20/10 thật xinh đẹp, tràn đầy năng lượng và hạnh phúc bên những người thân yêu!",
+        img: "https://i.imgur.com/k4g7R7P.jpeg"
+      },
+      "mai2024": {
+        text: "🌸 Mai ơi, chúc bạn luôn vui vẻ, tự tin và thành công trong mọi việc!",
+        img: "https://i.imgur.com/UZf8Dgk.jpeg"
+      },
+      "anh2024": {
+        text: "💝 Chúc Anh một ngày 20/10 thật đáng nhớ, luôn được yêu thương và nở nụ cười thật tươi!",
+        img: "https://i.imgur.com/TxOBbZ3.jpeg"
+      },
+      "me2024": {
+        text: "💖 Con chúc mẹ thật nhiều sức khỏe, luôn hạnh phúc và mãi là người phụ nữ tuyệt vời nhất thế giới này!",
+        img: "https://i.imgur.com/rsjI8hz.jpeg"
+      }
     };
   </script>
 </head>
+
 <body>
-  <div class="container">
+  <div class="container" id="box">
     <h1>🔒 Nhập mật khẩu để nhận lời chúc 💖</h1>
-    <input type="password" id="passInput" placeholder="Nhập mật khẩu của bạn">
+    <input type="password" id="passInput" placeholder="Nhập mật khẩu của bạn" />
     <button id="checkBtn">Xác nhận</button>
-    <p id="message"></p>
+    <div id="result"></div>
   </div>
 
   <script>
     const input = document.getElementById("passInput");
     const btn = document.getElementById("checkBtn");
-    const msg = document.getElementById("message");
+    const box = document.getElementById("box");
+    const result = document.getElementById("result");
 
     btn.onclick = () => {
       const val = input.value.trim();
-      if (passwords[val]) {
-        msg.innerHTML = passwords[val];
-        msg.style.color = "#e91e63";
-        msg.style.fontSize = "18px";
-        msg.style.fontWeight = "500";
+      if (wishes[val]) {
+        const wish = wishes[val];
+
+        // Ẩn phần nhập, chỉ giữ nội dung lời chúc
+        box.innerHTML = `
+          <div class="wish-content">
+            <img src="${wish.img}" alt="#" class="wish-image" />
+            <p class="wish-text">${wish.text}</p>
+          </div>
+        `;
+
+        // Thêm tim bay
+        createHearts();
       } else {
-        msg.textContent = "❌ Mật khẩu không đúng! Thử lại nhé 💬";
-        msg.style.color = "red";
+        result.innerHTML = `<p style="color:red;">❌ Mật khẩu không đúng! Thử lại nhé 💬</p>`;
       }
     };
+
+    // Nhấn Enter để xác nhận
+    input.addEventListener("keypress", e => {
+      if (e.key === "Enter") btn.click();
+    });
+
+    // 💞 Tim bay to và nhiều hơn
+    function createHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 5 + Math.random() * 3 + "s";
+        heart.style.fontSize = 24 + Math.random() * 16 + "px";
+        heart.innerHTML = ["💖", "💞", "💘", "💗", "💕"][Math.floor(Math.random() * 5)];
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }, 350);
+    }
   </script>
 </body>
 </html>
