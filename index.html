@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Món quà 20/10 💝</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Thư viện QRCodeStyling -->
+  <script src="https://unpkg.com/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+</head>
+<body>
+  <div class="heart-background">
+    <div class="container">
+      <h1>💖 Chúc mừng ngày 20/10 💖</h1>
+      <p>Hãy dùng điện thoại quét mã QR bên trong trái tim để nhận lời chúc đặc biệt nhé!</p>
+      <div class="heart-frame">
+        <div id="qrcode"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 👉 Thay bằng link thật GitHub Pages của bạn
+    const messageUrl = "https://ja-code-png.github.io/loichuc-20-10/message.html";
+
+    const qr = new QRCodeStyling({
+      data: messageUrl,
+      width: 180,
+      height: 180,
+      type: "svg",
+      dotsOptions: { color: "#e91e63", type: "rounded" },
+      backgroundOptions: { color: "#ffffff" },
+      imageOptions: {
+        crossOrigin: "anonymous",
+        margin: 4,
+        imageSize: 0.3
+      }
+    });
+
+    qr.append(document.getElementById("qrcode"));
+  </script>
+</body>
+</html>

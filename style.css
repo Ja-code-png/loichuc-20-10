@@ -1,0 +1,78 @@
+/* Chung cho toàn trang */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  background: url("background.jpg") no-repeat center center/cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Khung chính */
+.container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255, 105, 180, 0.3);
+  max-width: 500px;
+}
+
+/* Trái tim lớn */
+.heart-frame {
+  position: relative;
+  width: 280px;
+  height: 250px;
+  margin: 0 auto;
+}
+
+.heart-frame::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 250px;
+  background: pink;
+  clip-path: path("M140 240C140 240 10 160 10 90C10 40 50 10 90 10C120 10 140 40 140 40C140 40 160 10 190 10C230 10 270 40 270 90C270 160 140 240 140 240Z");
+  animation: beat 1.8s infinite ease-in-out;
+  opacity: 0.3;
+  filter: blur(1px);
+}
+
+/* QR nằm giữa trái tim */
+#qrcode {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background: #fff;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Hiệu ứng tim đập */
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* Dành cho message.html */
+input, button {
+  padding: 10px 15px;
+  font-size: 16px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #e91e63;
+}
+
+button {
+  background: #e91e63;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.85;
+}

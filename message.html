@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lời chúc 20/10 💌</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // 🔐 Mỗi mật khẩu = 1 lời chúc riêng
+    const passwords = {
+      "hoa2024": "💐 Chúc Hoa ngày 20/10 thật xinh đẹp, tràn đầy năng lượng và hạnh phúc bên những người thân yêu!",
+      "mai2024": "🌸 Mai ơi, chúc bạn luôn vui vẻ, tự tin và thành công trong mọi việc!",
+      "anh2024": "💝 Chúc Anh một ngày 20/10 thật đáng nhớ, luôn được yêu thương và nở nụ cười thật tươi!"
+    };
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>🔒 Nhập mật khẩu để nhận lời chúc 💖</h1>
+    <input type="password" id="passInput" placeholder="Nhập mật khẩu của bạn">
+    <button id="checkBtn">Xác nhận</button>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    const input = document.getElementById("passInput");
+    const btn = document.getElementById("checkBtn");
+    const msg = document.getElementById("message");
+
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (passwords[val]) {
+        msg.innerHTML = passwords[val];
+        msg.style.color = "#e91e63";
+        msg.style.fontSize = "18px";
+        msg.style.fontWeight = "500";
+      } else {
+        msg.textContent = "❌ Mật khẩu không đúng! Thử lại nhé 💬";
+        msg.style.color = "red";
+      }
+    };
+  </script>
+</body>
+</html>
