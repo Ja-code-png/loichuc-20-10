@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lời chúc 20/10 💌</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* 🌈 Nền gradient rực rỡ */
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Khung chính */
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 25px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 450px;
+      position: relative;
+      z-index: 2;
+      transition: opacity 1s ease;
+    }
+    .container.dimmed {
+      opacity: 0.3;
+    }
+
+    input, button {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid #e91e63;
+      font-size: 16px;
+      margin-top: 10px;
+      outline: none;
+    }
+    button {
+      background: #e91e63;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { transform: scale(1.05); opacity: 0.9; }
+
+    /* Lời chúc & ảnh */
+    .wish-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .wish-content.show { opacity: 1; }
+
+    .wish-image {
+      width: 250px;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+    .wish-text {
+      color: #e91e63;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    /* Pháo hoa canvas */
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 5;
+      display: none;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
+
+    /* Chữ chúc mừng */
+    #celebration {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      font-size: 70px;
+      font-weight: 800;
+      text-align: center;
+      color: #ff4081;
+      text-shadow: 0 0 15px #fff, 0 0 30px #ff1493, 0 0 45px #ff66b2;
+      opacity: 0;
+      transition: all 1.2s ease;
+      z-index: 6;
+      animation: glowPulse 1.5s ease-in-out infinite;
+    }
+    #celebration.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    @keyframes glowPulse {
+      0%,100% { text-shadow: 0 0 15px #fff, 0 0 30px #ff1493; }
+      50% { text-shadow: 0 0 25px #ff4da6, 0 0 45px #ff80bf; }
+    }
+
+    /* 💖 Tim bay */
+    .heart {
+      position: fixed;
+      bottom: 0;
+      font-size: 28px;
+      animation: fly 6s linear infinite;
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 3;
+    }
+    @keyframes fly {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.8); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="fireworksCanvas"></canvas>
+  <div id="celebration">Chúc mừng 20/10 💐</div>
+
+  <div class="container" id="box">
+    <h1>🔒 Nhập mật khẩu để nhận lời chúc 💖</h1>
+    <input type="password" id="passInput" placeholder="Nhập mật khẩu của bạn">
+    <button id="checkBtn">Xác nhận</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+
+    const wishes = {
+      "anhthao": {
+        text: `💝 Tháng mười hai chục ghé qua,
+Chúc Thảo xinh đẹp, mặn mà như xưa.
+Tiền vô như nước đổ mưa,
+Tình duyên gõ cửa, chẳng thừa… một ai 😄 
+Chúc Thảo 20-10 vui vẻ
+Chuẩn rồi yeeee 💖`,
+        img: "anhthao.jpeg"
+      },
+      "thungan": {
+        text: "💐 Chúc Ngân 20/10 thật vui vẻ, xinh đẹp, luôn cười tươi như hoa, được nhận nhiều lời chúc, nhiều hoa và đặc biệt là luôn hạnh phúc nhaaa",
+        img: "thungan.jpeg"
+      },
+      "hathuong": {
+        text: "🌸 Nhân ngày Phụ nữ Việt Nam 20/10, chúc bạn Hà Thương – một cô gái vui vẻ, trầm tính nhưng luôn quan tâm và hòa đồng – sẽ mãi giữ được sự dịu dàng, đáng mến ấy. Mong bạn luôn hạnh phúc, học giỏi, và gặp thật nhiều niềm vui trong cuộc sống ,Mong bạn không chỉ hôm nay mà ngày nào cũng nhận được lời khen, quà xịn và nụ cười thiệt tươi. Nói chung là: đẹp – học giỏi – sống chill – và luôn là chính mình nhé! 🌷",
+        img: "hathuong.jpeg"
+      },
+      "haily": {
+        text: "💖 Nhân ngày phụ nữ Việt Nam 20/10 mình chúc bạn Hải Ly tràn ngập niềm vui và hạnh phúc , chúc bạn luôn xinh đẹp dịu dàng luôn nở nụ cười trên môi. Mong từ ngày này trở đi bạn luôn nở nụ cười thay vì mít ướt nha luôn tích cực và hoà đồng với mọi người nha",
+        img: "haily.jpeg"
+      },
+      "lananh": {
+        text: "Chúc Lanh 20/10 luôn xinh như thiên thần, cười tươi như hoa nở, hạnh phúc như được ngủ thêm 10 tiếng, và lúc nào cũng đáng yêu như bây giờ nhaaa",
+        img: "lanh.jpeg"
+      },
+      "thuyhuong": {
+        text: "Nhân dịp 20/10,chúc Hương luôn tươi tắn và hoạt bát, chúc tương lai Hương sáng lạn, dù sẽ có lúc THỊNH lúc suy, song mong hương vẫn luôn tiến lên phía trước",
+        img: "thuyhuong.jpeg"
+      },
+      "nhuquynh": {
+        text: "20/10 chúc Như Quỳnh luôn vui vẻ tươi tắn nở như hoa học giỏi hơn nhiều và luon luon xinh đẹp nha vững bước trên con đường mình chọn nhé",
+        img: "nhuquynh.jpeg"
+      },
+      "dieuchau": {
+        text: "Đẹp – có. Cá tính – có. Biết chơi Valorant – quá có! Châu ơi, 20-10 này không ai xứng đáng được tặng skin hơn bạn hết. Chúc bạn rực rỡ như khẩu Vandal Prime và cool như Killjoy bật ulti!",
+        img: "chau.jpeg"
+      },
+      "mailinh": {
+        text: "Chúc bạn Mai Linh – cô bạn chăm học nhất lớp – có một ngày 20/10 thật ý nghĩa, luôn tràn đầy năng lượng, gặp nhiều may mắn và giữ vững tinh thần học tập tuyệt vời như hiện tại nha! 💖",
+        img: "mailinh.jpeg"
+      },
+      "baoky": {
+        text: "20/10 vui vẻ nhé! Chúc bạn 𝘽ả𝙤 𝙆ỳ luôn rạng rỡ, tự tin và tỏa sáng như đóa hoa giữa cuộc đời. Không những thế chúc bạn có thật nhiều niềm vui, sức khỏe dẻo dai để tiếp tục tung hoành trên sân cầu lông và trong cuộc sống!",
+        img: "ky.jpeg"
+      },
+      "maiquynh": {
+        text: "Chúc bạn Mai Quỳnh ngày 20/10 thật vui vẻ và rực rỡ. Chúc Quỳnh luôn luôn xinh đẹp tự tin và luôn giữ được những nụ cười tươi tắn trên môi.",
+        img: "maiquynh.jpeg"
+      },
+      "thuylinh": {
+        text: `Gửi Thùy Linh✨,
+​Nhân ngày 20/10. Tớ muốn gửi tới cậu lời chúc tốt đẹp nhất.
+​Chúc Thùy Linh✨ của lớp mình luôn xinh đẹp, rạng rỡ và giữ mãi nụ cười tươi tắn đó nhé! Quan trọng hơn, chúc cậu luôn học tốt, đạt được mọi mục tiêu mà cậu đặt ra trong năm học này. Mong cậu luôn tràn đầy năng lượng, vui vẻ và có thật nhiều kỷ niệm đáng nhớ bên bạn bè dưới mái trường cấp Ba này.
+​Hy vọng cậu có một ngày 20/10 thật ý nghĩa, ấm áp và nhận được nhiều quà!`,
+        img: "thuylinh.jpeg"
+      },
+      "mailan": {
+        text: `Chúc mừng 20/11 nhé hoạ sĩ của lớp 
+Dù lúc nào cũng “bay trên mây”, vẽ tranh quên cả trời đất, nhưng cậu luôn mang lại tiếng cười và năng lượng tích cực cho cả lớp. Mong rằng nét vẽ của cậu sẽ ngày càng sắc sảo, sáng tạo hơn nữa, và sự hồn nhiên, vui vẻ ấy sẽ luôn theo cậu mãi!
+Chúc cậu một ngày 20/11 thật vui, tiếp tục “vô tư” đúng chất, và vẽ ra một tương lai rực rỡ như những bức tranh cậu yêu thích nhé! 🎉♥️`,
+        img: "mailan.jpg"
+      },
+      "khanhlinh": {
+        text: `Chúc mừng 20/10, Khánh Linh! 💕🎉
+Chúc bạn luôn xinh đẹp, tự tin và rạng rỡ như một đóa hoa. Mong bạn có một ngày thật đặc biệt, tràn đầy niềm vui, hạnh phúc và những bất ngờ thú vị. Bạn xứng đáng được yêu thương và chăm sóc. Chúc bạn có một tương lai tươi sáng và thành công🎁💗`,
+        img: "khanhlinh.jpeg"
+      },
+      "daomy": {
+        text: `Gửi 🍑 My 🐳🐳
+Nhân ngày Phụ nữ Việt Nam 20/10, chúc bạn 🍑 My --"tân bí thư"-- Cô gái tính khí trẻ con nhưng tốt bụng , hoà đồng với bạn bè --. Mong cổ luôn hạnh phúc,học giỏi,cao hơn bằng bạn bằng bè , mau ăn chóng lớn , luôn tươi cười rạng rỡ, gặp thật nhiều niềm vui trong cuộc sống, Mong không chỉ ngày hôm nay còn nhiều ngày nữa sẽ được những lời chúc tốt đẹp hơn . Và hãy nhớ mình là người phụ nữ đẹp của tổ 2 và lớp 11A7 
+Hy vọng cậu sẽ có ngày 20/10 thật vui vẻ và nhận nhiều quà`,
+        img: "daomy.jpeg"
+      },
+      "thutrang": {
+        text: "Nhân ngày Phụ nữ Việt Nam 20/10,Thu Trang – cô bạn năng động, dễ thương và luôn mang lại tiếng cười cho mọi người – chúc bạn ngày càng xinh đẹp, tự tin và thành công hơn nữa. Chúc bạn có một ngày 20/10 thật ý nghĩa, được nhận nhiều hoa, quà và lời chúc ngọt ngào nhất! 💖🌸",
+        img: "trang.jpeg"
+      },
+      "ngocphuong": {
+        text: "💗 20/10 Chúc Phương ngày càng xinh xắn, dễ thương, không còn lỡ tay đánh bạn bên cạnh:))) và gặp được người yêu, thương mình chiều mình nhaaa",
+        img: "ngocphuong.jpeg"
+      },
+      "phuonganh": {
+        text: "(⁠◍⁠•⁠ᴗ⁠•⁠◍⁠)⁠✧⁠*⁠。 Chúc cô gái dễ thương, nhẹ nhàng, xinh xắn, vẽ đẹp có một ngày 20/10 thật vui vẻ. Cuộc đời mà chỉ sống được 1 lần thôi, cứ vui đi, không có gì phải nghĩ lung tung với tiêu cực cả. UwU ",
+        img: "phuonganh.jpg"
+      },
+      "huongly": {
+        text: "Chúc HuongLy 20/10 1 ngày vui tươi , xinh đẹp , hạnh phúc , chăm chỉ và học giỏi hơn , tuổi mới rồi thì  mạnh mẽ lên cô nhé Happy Vietnamese Women's Dayybel !!",
+        img: "huongly.jpeg"
+      },
+      "thuclinh": {
+        text: `Happy 20/10 cô nàng Thục Linh!
+Chúc bà luôn xinh, luôn vui, và biết cất điện thoại đúng lúc để khỏi bị “bay màu” tiết học nha 😆📚`,
+        img: "thuclinh.jpeg"
+      },
+      "duongmy": {
+        text: "Happy women's day. Chúc Dtrmy lúc nào có nhiều năng lượng tích cực, nhận được nhiều hạnh phúc trong cuộc sống và mãi là bông hoa  hướng dương luôn hướng về phía ánh sáng.",
+        img: "duongmy.jpeg"
+      },
+      "ngochao": {
+        text: `20/10 chúc Hảo càng ngày càng xinh,
+học càng ngày càng đỉnh,
+và lướt điện thoại trong giờ mà không bị tóm càng ngày càng chuyên nghiệp hơn 😏
+Idol “đa nhiệm” của lớp là đây chứ đâu!`,
+        img: "ngochao.jpeg"
+      },
+      "khanhly":{
+        text: `Chúc bạn khánh Ly có một ngày 20/10 thật đặc biệt và tràn đầy yêu thương.
+Chúc bạn luôn tươi tắn, học tốt và gặp thật nhiều điều may mắn.
+Mong rằng mỗi ngày đến lớp đều là một ngày vui với bạn và cả chúng mình 💖`,
+        img: "khanhly.jpg"
+      },
+      "tranly":{
+        text: "Ly à, nhân địp 20/10, chúc ly thật vui vẻ và hạnh phúc, nếu ly đọc được dòng này, tớ chỉ muốn ly biết rằng, ly xinh lắm đấy ly có biết không",
+        img: "tranly.jpg"
+      },
+      "ngockhanh": {
+        text: `Chúc Khánh 20/10 thật vui vẻ, xinh đẹp và luôn rạng rỡ như bây giờ nhé 💐
+Mong Khánh cùng “đồng đội chiến đấu” Dương My của mình tiếp tục là cặp song sát huyền thoại, đi tới đâu là tỏa sáng tới đó`,
+        img: "ngockhanh.jpeg"
+      }
+
+    };
+
+    const input = document.getElementById('passInput'),
+          btn = document.getElementById('checkBtn'),
+          box = document.getElementById('box'),
+          result = document.getElementById('result'),
+          celebration = document.getElementById('celebration'),
+          canvas = document.getElementById('fireworksCanvas'),
+          ctx = canvas.getContext('2d');
+
+    let running = false, fireworks = [];
+
+    /* ==== Pháo hoa ==== */
+    function resizeCanvas() {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    }
+    addEventListener('resize', resizeCanvas);
+
+    function Firework(x, targetY, color) {
+      this.x = x;
+      this.y = canvas.height + 10;
+      this.targetY = targetY;
+      this.color = color;
+      this.speed = 8 + Math.random() * 3;
+      this.exploded = false;
+      this.particles = [];
+    }
+    Firework.prototype.update = function() {
+      if (!this.exploded) {
+        this.y -= this.speed;
+        if (this.y <= this.targetY) this.explode();
+      }
+      this.particles.forEach(p => p.update());
+      this.particles = this.particles.filter(p => p.alpha > 0);
+    };
+    Firework.prototype.draw = function() {
+      if (!this.exploded) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+      this.particles.forEach(p => p.draw());
+    };
+    Firework.prototype.explode = function() {
+      this.exploded = true;
+      const n = 100 + Math.floor(Math.random() * 60);
+      for (let i = 0; i < n; i++)
+        this.particles.push(new Particle(this.x, this.y, this.color));
+    };
+
+    function Particle(x, y, color) {
+      this.x = x;
+      this.y = y;
+      const s = 2.5 + Math.random() * 6, a = Math.random() * Math.PI * 2;
+      this.vx = Math.cos(a) * s;
+      this.vy = Math.sin(a) * s;
+      this.alpha = 1;
+      this.color = color;
+      this.size = 2 + Math.random() * 4;
+    }
+    Particle.prototype.update = function() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += 0.06;
+      this.alpha -= 0.018;
+    };
+    Particle.prototype.draw = function() {
+      ctx.beginPath();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = this.color.replace('hsl', 'hsla').replace(')', ',' + this.alpha + ')');
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+    };
+
+    function animate() {
+      if (!running) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (Math.random() < 0.25)
+        fireworks.push(new Firework(Math.random() * canvas.width, (0.15 + Math.random() * 0.4) * canvas.height, `hsl(${Math.random() * 360},100%,65%)`));
+      fireworks.forEach(f => { f.update(); f.draw(); });
+      fireworks = fireworks.filter(f => f.particles.length > 0 || !f.exploded);
+      requestAnimationFrame(animate);
+    }
+
+    function startFireworks() {
+      resizeCanvas();
+      canvas.style.display = 'block';
+      canvas.style.opacity = '1';
+      running = true;
+      fireworks = [];
+      animate();
+    }
+    function stopFireworksSmooth() {
+      running = false;
+      canvas.style.transition = 'opacity 1.5s ease';
+      canvas.style.opacity = '0';
+      setTimeout(() => canvas.style.display = 'none', 1600);
+    }
+
+    /* ==== Logic kiểm tra mật khẩu ==== */
+    btn.onclick = () => onCheck();
+    input.addEventListener('keypress', e => { if (e.key === 'Enter') onCheck(); });
+
+    function onCheck() {
+      const val = input.value.trim();
+      if (!val) return;
+      if (!wishes[val]) {
+        result.innerHTML = '<span style="color:#e91e63">❌ Mật khẩu không đúng! Thử lại nhé 💬</span>';
+        return;
+      }
+
+      const wish = wishes[val];
+      box.innerHTML = `
+        <div class="wish-content" id="wishBox">
+          <img src="${wish.img}" class="wish-image" />
+          <p class="wish-text">${wish.text}</p>
+        </div>`;
+      const wishBox = document.getElementById('wishBox');
+      document.querySelector('.container').classList.add('dimmed');
+
+      // Hiệu ứng pháo hoa + chữ chúc mừng
+      startFireworks();
+      celebration.classList.add('show');
+
+      // Sau 4 giây: mờ dần, ảnh hiện sáng lại
+      setTimeout(() => {
+        celebration.style.transition = 'opacity 1.5s ease';
+        celebration.style.opacity = '0';
+        stopFireworksSmooth();
+        setTimeout(() => {
+          document.querySelector('.container').classList.remove('dimmed');
+          wishBox.classList.add('show');
+          startHearts();
+        }, 1400);
+      }, 4000);
+    }
+
+    /* 💞 Tim bay */
+    function startHearts() {
+      let n = 0;
+      const t = setInterval(() => {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.style.left = (20 + Math.random() * 60) + 'vw';
+        h.style.fontSize = (22 + Math.random() * 20) + 'px';
+        h.textContent = ['💖', '💞', '💕', '💗'][Math.floor(Math.random() * 4)];
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 7000);
+        if (++n > 20) clearInterval(t);
+      }, 180);
+    }
+  </script>
+</body>
+</html>
