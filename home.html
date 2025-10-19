@@ -22,18 +22,6 @@ video {
   box-shadow: 0 0 30px rgba(255,192,203,0.6);
   z-index: 0;
 }
-h1 {
-  margin-top: 20px;
-  color: #fff;
-  font-size: 46px;
-  text-shadow: 0 0 20px #ff80ab, 0 0 35px #e91e63;
-  z-index: 2;
-  animation: fade 2s ease forwards;
-}
-@keyframes fade {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 button {
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid #e91e63;
@@ -109,10 +97,8 @@ canvas {
     <source src="vid.mp4" type="video/mp4">
   </video>
 
-  <!-- <h1>💖 Chúc mừng ngày 20/10 💖</h1> -->
   <canvas id="flowers"></canvas>
 
-  <!-- <button onclick="location.href='message.html'">💌 Xem lại lời chúc</button> -->
   <button id="soundBtn">🔊</button>
   <button id="controlBtn">⏸</button>
 
