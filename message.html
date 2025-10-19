@@ -1,167 +1,177 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lời chúc 20/10 💌</title>
-  <link rel="stylesheet" href="style.css">
 
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lời chúc 20/10 💌</title>
   <style>
-    /* 🌈 Nền gradient rực rỡ */
+    :root {
+      --accent: #e91e63
+    }
+
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
       background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
       background-size: 400% 400%;
-      animation: gradientMove 10s ease infinite;
+      animation: move 10s linear infinite;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
       overflow: hidden;
     }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+
+    @keyframes move {
+      0% {
+        background-position: 0% 50%
+      }
+
+      50% {
+        background-position: 100% 50%
+      }
+
+      100% {
+        background-position: 0% 50%
+      }
     }
 
-    /* Khung chính */
     .container {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 25px;
-      padding: 35px 25px;
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 20px;
+      padding: 28px;
       text-align: center;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      width: 90%;
-      max-width: 450px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      width: 92%;
+      max-width: 560px;
       position: relative;
-      z-index: 2;
-      transition: opacity 1s ease;
-    }
-    .container.dimmed {
-      opacity: 0.3;
+      z-index: 1;
+      transition: filter .6s ease, opacity .6s ease;
     }
 
-    input, button {
-      padding: 10px 15px;
+    .container.dimmed {
+      filter: blur(6px) brightness(.5)
+    }
+
+    input,
+    button {
+      padding: 10px 14px;
       border-radius: 8px;
-      border: 1px solid #e91e63;
+      border: 1px solid var(--accent);
       font-size: 16px;
-      margin-top: 10px;
       outline: none;
     }
-    button {
-      background: #e91e63;
-      color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover { transform: scale(1.05); opacity: 0.9; }
 
-    /* Lời chúc & ảnh */
+    button {
+      background: var(--accent);
+      color: #fff;
+      margin-left: 8px;
+      cursor: pointer
+    }
+
     .wish-content {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
       opacity: 0;
-      transition: opacity 1.2s ease;
+      transition: opacity .9s ease, transform .6s ease
     }
-    .wish-content.show { opacity: 1; }
+
+    .wish-content.show {
+      opacity: 1;
+      transform: translateY(0)
+    }
 
     .wish-image {
-      width: 250px;
-      border-radius: 15px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      width: 320px;
+      max-width: 88%;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      transform: scale(.98)
     }
+
     .wish-text {
-      color: #e91e63;
-      font-size: 20px;
-      font-weight: 500;
+      color: var(--accent);
+      font-size: 18px;
       line-height: 1.6;
-      white-space: pre-line;
+      white-space: pre-line
     }
 
-    /* Pháo hoa canvas */
-    canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 5;
-      display: none;
-      pointer-events: none;
-      transition: opacity 1.5s ease;
-    }
-
-    /* Chữ chúc mừng */
     #celebration {
       position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      font-size: 70px;
-      font-weight: 800;
-      text-align: center;
-      color: #ff4081;
-      text-shadow: 0 0 15px #fff, 0 0 30px #ff1493, 0 0 45px #ff66b2;
+      left: 50%;
+      top: 42%;
+      transform: translate(-50%, -50%) scale(.95);
+      font-size: 56px;
+      color: #fff;
+      text-shadow: 0 6px 30px rgba(233, 30, 99, 0.65);
+      z-index: 6;
       opacity: 0;
       transition: all 1.2s ease;
-      z-index: 6;
-      animation: glowPulse 1.5s ease-in-out infinite;
-    }
-    #celebration.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    @keyframes glowPulse {
-      0%,100% { text-shadow: 0 0 15px #fff, 0 0 30px #ff1493; }
-      50% { text-shadow: 0 0 25px #ff4da6, 0 0 45px #ff80bf; }
     }
 
-    /* 💖 Tim bay */
+    #celebration.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1)
+    }
+
+    #fireworksCanvas {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      pointer-events: none;
+      display: none;
+      opacity: 1;
+      transition: opacity 1.4s ease;
+    }
+
     .heart {
       position: fixed;
       bottom: 0;
-      font-size: 28px;
-      animation: fly 6s linear infinite;
-      opacity: 0.9;
+      font-size: 26px;
       pointer-events: none;
-      z-index: 3;
+      z-index: 4;
+      animation: fly 6s linear infinite
     }
+
     @keyframes fly {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-100vh) scale(1.8); opacity: 0; }
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1
+      }
+
+      100% {
+        transform: translateY(-100vh) scale(1.8);
+        opacity: 0
+      }
     }
   </style>
 </head>
 
 <body>
   <canvas id="fireworksCanvas"></canvas>
-  <div id="celebration">Chúc mừng 20/10 💐</div>
+  <div id="celebration">💖 Chúc mừng 20/10 💐</div>
 
   <div class="container" id="box">
     <h1>🔒 Nhập mật khẩu để nhận lời chúc 💖</h1>
-    <input type="password" id="passInput" placeholder="Nhập mật khẩu của bạn">
-    <button id="checkBtn">Xác nhận</button>
-    <div id="result"></div>
+    <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;">
+      <input type="password" id="passInput" placeholder="Nhập mật khẩu của bạn" inputmode="latin" autocapitalize="none"
+        autocomplete="off" autocorrect="off" spellcheck="false" />
+
+      <button id="checkBtn">Xác nhận</button>
+    </div>
+    <div id="result" style="margin-top:12px;color:var(--accent)"></div>
   </div>
 
   <script>
-
     const wishes = {
-      "anhthao": {
-        text: `💝 Tháng mười hai chục ghé qua,
-Chúc Thảo xinh đẹp, mặn mà như xưa.
-Tiền vô như nước đổ mưa,
-Tình duyên gõ cửa, chẳng thừa… một ai 😄 
-Chúc Thảo 20-10 vui vẻ
-Chuẩn rồi yeeee 💖`,
-        img: "anhthao.jpeg"
-      },
-      "thungan": {
-        text: "💐 Chúc Ngân 20/10 thật vui vẻ, xinh đẹp, luôn cười tươi như hoa, được nhận nhiều lời chúc, nhiều hoa và đặc biệt là luôn hạnh phúc nhaaa",
-        img: "thungan.jpeg"
-      },
+      "anhthao": { text: `💝 Tháng mười hai chục ghé qua,\nChúc Thảo xinh đẹp, mặn mà như xưa.\nTiền vô như nước đổ mưa,\nTình duyên gõ cửa, chẳng thừa… một ai 😄\nChúc Thảo 20-10 vui vẻ\nChuẩn rồi yeeee`, img: "anhthao.jpeg" },
+      "thungan": { text: "💐 Chúc Ngân 20/10 thật vui vẻ, xinh đẹp, luôn cười tươi như hoa.", img: "thungan.jpeg" },
       "hathuong": {
         text: "🌸 Nhân ngày Phụ nữ Việt Nam 20/10, chúc bạn Hà Thương – một cô gái vui vẻ, trầm tính nhưng luôn quan tâm và hòa đồng – sẽ mãi giữ được sự dịu dàng, đáng mến ấy. Mong bạn luôn hạnh phúc, học giỏi, và gặp thật nhiều niềm vui trong cuộc sống ,Mong bạn không chỉ hôm nay mà ngày nào cũng nhận được lời khen, quà xịn và nụ cười thiệt tươi. Nói chung là: đẹp – học giỏi – sống chill – và luôn là chính mình nhé! 🌷",
         img: "hathuong.jpeg"
@@ -254,13 +264,13 @@ và lướt điện thoại trong giờ mà không bị tóm càng ngày càng c
 Idol “đa nhiệm” của lớp là đây chứ đâu!`,
         img: "ngochao.jpeg"
       },
-      "khanhly":{
+      "khanhly": {
         text: `Chúc bạn khánh Ly có một ngày 20/10 thật đặc biệt và tràn đầy yêu thương.
 Chúc bạn luôn tươi tắn, học tốt và gặp thật nhiều điều may mắn.
 Mong rằng mỗi ngày đến lớp đều là một ngày vui với bạn và cả chúng mình 💖`,
         img: "khanhly.jpg"
       },
-      "tranly":{
+      "tranly": {
         text: "Ly à, nhân địp 20/10, chúc ly thật vui vẻ và hạnh phúc, nếu ly đọc được dòng này, tớ chỉ muốn ly biết rằng, ly xinh lắm đấy ly có biết không",
         img: "tranly.jpg"
       },
@@ -269,161 +279,92 @@ Mong rằng mỗi ngày đến lớp đều là một ngày vui với bạn và 
 Mong Khánh cùng “đồng đội chiến đấu” Dương My của mình tiếp tục là cặp song sát huyền thoại, đi tới đâu là tỏa sáng tới đó`,
         img: "ngockhanh.jpeg"
       }
-
     };
 
-    const input = document.getElementById('passInput'),
-          btn = document.getElementById('checkBtn'),
-          box = document.getElementById('box'),
-          result = document.getElementById('result'),
-          celebration = document.getElementById('celebration'),
-          canvas = document.getElementById('fireworksCanvas'),
-          ctx = canvas.getContext('2d');
+    const specialPass = "hocsinhthaytien"; // 🌟 mật khẩu đặc biệt
+    const input = document.getElementById("passInput"),
+      btn = document.getElementById("checkBtn"),
+      box = document.getElementById("box"),
+      canvas = document.getElementById("fireworksCanvas"),
+      ctx = canvas.getContext("2d");
+    let fireworks = [], running = false;
 
-    let running = false, fireworks = [];
+    function resizeCanvas() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    addEventListener("resize", resizeCanvas); resizeCanvas();
 
-    /* ==== Pháo hoa ==== */
-    function resizeCanvas() {
-      canvas.width = innerWidth;
-      canvas.height = innerHeight;
-    }
-    addEventListener('resize', resizeCanvas);
-
-    function Firework(x, targetY, color) {
-      this.x = x;
-      this.y = canvas.height + 10;
-      this.targetY = targetY;
-      this.color = color;
-      this.speed = 8 + Math.random() * 3;
-      this.exploded = false;
-      this.particles = [];
-    }
-    Firework.prototype.update = function() {
-      if (!this.exploded) {
-        this.y -= this.speed;
-        if (this.y <= this.targetY) this.explode();
-      }
-      this.particles.forEach(p => p.update());
-      this.particles = this.particles.filter(p => p.alpha > 0);
-    };
-    Firework.prototype.draw = function() {
-      if (!this.exploded) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-      }
-      this.particles.forEach(p => p.draw());
-    };
-    Firework.prototype.explode = function() {
-      this.exploded = true;
-      const n = 100 + Math.floor(Math.random() * 60);
-      for (let i = 0; i < n; i++)
-        this.particles.push(new Particle(this.x, this.y, this.color));
-    };
-
-    function Particle(x, y, color) {
-      this.x = x;
-      this.y = y;
-      const s = 2.5 + Math.random() * 6, a = Math.random() * Math.PI * 2;
-      this.vx = Math.cos(a) * s;
-      this.vy = Math.sin(a) * s;
-      this.alpha = 1;
-      this.color = color;
-      this.size = 2 + Math.random() * 4;
-    }
-    Particle.prototype.update = function() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.vy += 0.06;
-      this.alpha -= 0.018;
-    };
-    Particle.prototype.draw = function() {
-      ctx.beginPath();
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.fillStyle = this.color.replace('hsl', 'hsla').replace(')', ',' + this.alpha + ')');
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.globalCompositeOperation = 'source-over';
-    };
+    function Firework(x, y, color) { this.x = x; this.y = innerHeight; this.targetY = y; this.color = color; this.speed = 7; this.exploded = false; this.p = []; }
+    Firework.prototype.update = function () { if (!this.exploded) { this.y -= this.speed; if (this.y <= this.targetY) this.explode(); } this.p.forEach(p => p.update()); this.p = this.p.filter(p => p.a > 0); }
+    Firework.prototype.draw = function () { if (!this.exploded) { ctx.beginPath(); ctx.arc(this.x, this.y, 3, 0, 2 * Math.PI); ctx.fillStyle = this.color; ctx.fill(); } this.p.forEach(p => p.draw()); }
+    Firework.prototype.explode = function () { this.exploded = true; for (let i = 0; i < 80; i++)this.p.push(new Particle(this.x, this.y, this.color)); }
+    function Particle(x, y, c) { this.x = x; this.y = y; const s = Math.random() * 4 + 2, a = Math.random() * Math.PI * 2; this.vx = Math.cos(a) * s; this.vy = Math.sin(a) * s; this.a = 1; this.c = c; }
+    Particle.prototype.update = function () { this.x += this.vx; this.y += this.vy; this.vy += 0.05; this.a -= 0.02; }
+    Particle.prototype.draw = function () { ctx.globalAlpha = this.a; ctx.beginPath(); ctx.fillStyle = this.c; ctx.arc(this.x, this.y, 2, 0, 2 * Math.PI); ctx.fill(); ctx.globalAlpha = 1; }
 
     function animate() {
       if (!running) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (Math.random() < 0.25)
-        fireworks.push(new Firework(Math.random() * canvas.width, (0.15 + Math.random() * 0.4) * canvas.height, `hsl(${Math.random() * 360},100%,65%)`));
+      if (Math.random() < 0.18) fireworks.push(new Firework(Math.random() * canvas.width, Math.random() * canvas.height / 2, `hsl(${Math.random() * 360},100%,65%)`));
       fireworks.forEach(f => { f.update(); f.draw(); });
-      fireworks = fireworks.filter(f => f.particles.length > 0 || !f.exploded);
+      fireworks = fireworks.filter(f => f.p.length > 0 || !f.exploded);
       requestAnimationFrame(animate);
     }
-
-    function startFireworks() {
-      resizeCanvas();
-      canvas.style.display = 'block';
-      canvas.style.opacity = '1';
-      running = true;
-      fireworks = [];
-      animate();
+    function startFireworks() { running = true; canvas.style.display = 'block'; animate(); }
+    function stopFireworksSmooth() { running = false; canvas.style.opacity = '0'; setTimeout(() => { canvas.style.display = 'none'; ctx.clearRect(0, 0, canvas.width, canvas.height); }, 1200); }
+    function createHearts() {
+      let n = 0;
+      const i = setInterval(() => {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.style.left = Math.random() * 100 + "vw";
+        h.textContent = ["💖", "💞", "💘", "💕"][Math.floor(Math.random() * 4)];
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 6000);
+        if (++n > 20) clearInterval(i);
+      }, 200);
     }
-    function stopFireworksSmooth() {
-      running = false;
-      canvas.style.transition = 'opacity 1.5s ease';
-      canvas.style.opacity = '0';
-      setTimeout(() => canvas.style.display = 'none', 1600);
-    }
 
-    /* ==== Logic kiểm tra mật khẩu ==== */
-    btn.onclick = () => onCheck();
-    input.addEventListener('keypress', e => { if (e.key === 'Enter') onCheck(); });
+    btn.onclick = () => check();
+    input.onkeypress = e => { if (e.key === "Enter") check(); };
 
-    function onCheck() {
+    function check() {
       const val = input.value.trim();
-      if (!val) return;
-      if (!wishes[val]) {
-        result.innerHTML = '<span style="color:#e91e63">❌ Mật khẩu không đúng! Thử lại nhé 💬</span>';
+
+      // 🔹 Nếu nhập mật khẩu đặc biệt → hiệu ứng pháo hoa + chuyển trang
+      if (val === specialPass) {
+        document.getElementById("celebration").textContent = "🎆 Học sinh thầy Tiến! 🎆";
+        document.getElementById("celebration").classList.add("show");
+        startFireworks();
+        box.classList.add("dimmed");
+        setTimeout(() => {
+          stopFireworksSmooth();
+          window.location.href = "home.html";
+        }, 3000);
         return;
       }
 
-      const wish = wishes[val];
-      box.innerHTML = `
-        <div class="wish-content" id="wishBox">
-          <img src="${wish.img}" class="wish-image" />
-          <p class="wish-text">${wish.text}</p>
-        </div>`;
-      const wishBox = document.getElementById('wishBox');
-      document.querySelector('.container').classList.add('dimmed');
+      // 🔹 Còn lại: hiện lời chúc như bình thường
+      if (!wishes[val]) {
+        document.getElementById("result").innerHTML = "❌ Sai mật khẩu!";
+        return;
+      }
 
-      // Hiệu ứng pháo hoa + chữ chúc mừng
+      const w = wishes[val];
+      box.innerHTML = `<div class='wish-content' id='wishBox'><img src='${w.img}' class='wish-image'><p class='wish-text'>${w.text}</p></div>`;
+      const wishBox = document.getElementById("wishBox");
+      setTimeout(() => wishBox.classList.add("show"), 200);
+      box.classList.add("dimmed");
+      document.getElementById("celebration").classList.add("show");
       startFireworks();
-      celebration.classList.add('show');
-
-      // Sau 4 giây: mờ dần, ảnh hiện sáng lại
       setTimeout(() => {
-        celebration.style.transition = 'opacity 1.5s ease';
-        celebration.style.opacity = '0';
         stopFireworksSmooth();
+        document.getElementById("celebration").style.opacity = "0";
         setTimeout(() => {
-          document.querySelector('.container').classList.remove('dimmed');
-          wishBox.classList.add('show');
-          startHearts();
-        }, 1400);
+          box.classList.remove("dimmed");
+          createHearts();
+        }, 1200);
       }, 4000);
-    }
-
-    /* 💞 Tim bay */
-    function startHearts() {
-      let n = 0;
-      const t = setInterval(() => {
-        const h = document.createElement('div');
-        h.className = 'heart';
-        h.style.left = (20 + Math.random() * 60) + 'vw';
-        h.style.fontSize = (22 + Math.random() * 20) + 'px';
-        h.textContent = ['💖', '💞', '💕', '💗'][Math.floor(Math.random() * 4)];
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 7000);
-        if (++n > 20) clearInterval(t);
-      }, 180);
     }
   </script>
 </body>
+
 </html>
